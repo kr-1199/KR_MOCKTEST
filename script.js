@@ -1,80 +1,101 @@
-const questionBox = document.getElementById("question");
-const optionsBox = document.getElementById("options");
+const questions = [
+  {
+    question: "Which planet is known as the Red Planet?",
+    options: ["Earth", "Mars", "Jupiter", "Venus"],
+    answer: "Mars"
+  },
+  {
+    question: "Who wrote the Indian national anthem?",
+    options: ["Rabindranath Tagore", "Bankim Chandra", "Mahatma Gandhi", "Sarojini Naidu"],
+    answer: "Rabindranath Tagore"
+  },
+  {
+    question: "What is the capital of Japan?",
+    options: ["Beijing", "Seoul", "Tokyo", "Bangkok"],
+    answer: "Tokyo"
+  },
+  {
+    question: "How many continents are there?",
+    options: ["5", "6", "7", "8"],
+    answer: "7"
+  },
+  {
+    question: "Which gas do plants absorb?",
+    options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+    answer: "Carbon Dioxide"
+  }
+];
+
+let currentQ = 0;
+let score = 0;
+let selectedOption = null;
+let totalTime = 120;
+let timer;
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("next-btn");
-const timerDisplay = document.getElementById("time");
+const timerEl = document.getElementById("timer");
 const resultBox = document.getElementById("result-box");
 const quizBox = document.getElementById("quiz-box");
-const scoreText = document.getElementById("score");
-
-let currentQuestion = 0;
-let score = 0;
-let time = 30;
-let interval;
+const progress = document.getElementById("progress");
+const scoreEl = document.getElementById("score");
 
 function showQuestion(index) {
-  clearInterval(interval);
-  time = 30;
-  startTimer();
-
   const q = questions[index];
-  questionBox.textContent = q.question;
-  optionsBox.innerHTML = "";
+  questionEl.textContent = q.question;
+  optionsEl.innerHTML = "";
+
+  progress.textContent = `Question ${index + 1} of ${questions.length}`;
 
   q.options.forEach(option => {
-    const li = document.createElement("li");
-    li.textContent = option;
-    li.onclick = () => checkAnswer(option);
-    optionsBox.appendChild(li);
+    const btn = document.createElement("button");
+    btn.classList.add("btn", "btn-outline-dark");
+    btn.textContent = option;
+    btn.onclick = () => {
+      selectedOption = option;
+      nextBtn.disabled = false;
+      Array.from(optionsEl.children).forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    };
+    optionsEl.appendChild(btn);
   });
-
-  nextBtn.disabled = true;
 }
 
-function checkAnswer(selected) {
-  const correct = questions[currentQuestion].answer;
-  const options = optionsBox.querySelectorAll("li");
+function updateTimer() {
+  const minutes = Math.floor(totalTime / 60);
+  const seconds = totalTime % 60;
+  timerEl.textContent = `⏱ ${minutes}:${seconds.toString().padStart(2, "0")}`;
+  totalTime--;
 
-  options.forEach(opt => {
-    opt.style.pointerEvents = "none";
-    if (opt.textContent === correct) opt.style.background = "#28a745";
-    else if (opt.textContent === selected) opt.style.background = "#dc3545";
-  });
-
-  if (selected === correct) score++;
-  nextBtn.disabled = false;
-  clearInterval(interval);
-}
-
-function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    showQuestion(currentQuestion);
-  } else {
-    showResult();
+  if (totalTime < 0) {
+    endQuiz();
   }
 }
 
-function startTimer() {
-  timerDisplay.textContent = time;
-  interval = setInterval(() => {
-    time--;
-    timerDisplay.textContent = time;
-    if (time === 0) {
-      clearInterval(interval);
-      checkAnswer(""); // No answer given
-      nextBtn.disabled = false;
-    }
-  }, 1000);
+function nextQuestion() {
+  if (selectedOption === questions[currentQ].answer) score++;
+  currentQ++;
+
+  if (currentQ < questions.length) {
+    selectedOption = null;
+    nextBtn.disabled = true;
+    showQuestion(currentQ);
+  } else {
+    endQuiz();
+  }
 }
 
-function showResult() {
-  quizBox.classList.add("hidden");
-  resultBox.classList.remove("hidden");
-  scoreText.textContent = `You scored ${score} out of ${questions.length} (${Math.round(score / questions.length * 100)}%)`;
+function endQuiz() {
+  clearInterval(timer);
+  quizBox.classList.add("d-none");
+  resultBox.classList.remove("d-none");
+  scoreEl.textContent = `You scored ${score} out of ${questions.length}`;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  showQuestion(currentQ);
+  timer = setInterval(updateTimer, 1000);
+});
 
 nextBtn.addEventListener("click", nextQuestion);
-
-window.onload = () => {
-  showQuestion(currentQuestion);
-};

@@ -1,66 +1,50 @@
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #f5f7fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: linear-gradient(145deg, #f0f4f8, #ffffff);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
     height: 100vh;
-  }
-  
-  .container {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-  }
-  
-  #question {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  #options {
-    list-style: none;
+    margin: 0;
     padding: 0;
   }
   
-  #options li {
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    background: #e8f0fe;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
+  .app-container {
+    min-height: 100vh;
+    padding: 40px 20px;
   }
   
-  #options li:hover {
-    background: #d2e3fc;
+  h1 {
+    font-weight: 700;
+    color: #1d1d1f;
+    text-shadow: 1px 1px 1px #ccc;
   }
   
-  button {
-    padding: 0.6rem 1.2rem;
-    background: #007bff;
-    border: none;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
+  .question-box {
+    background: #ffffff;
+    border-radius: 1.5rem;
+    width: 10%;
+    max-width: 100px;
+  }
+  
+  .btn-group-vertical .btn {
+    margin-bottom: 5px;
+    border-radius: 20px;
     font-size: 1rem;
+    transition: all 0.3s ease;
   }
   
-  button:hover {
-    background: #0056b3;
+  .btn-group-vertical .btn:hover {
+    background-color: #e5f0ff;
+    color: #0056b3;
   }
   
-  #timer {
-    margin-top: 1rem;
-    color: #444;
+  .timer {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ff3b30;
   }
   
-  .hidden {
-    display: none;
+  .result-card {
+    background: #f5f5f7;
+    max-width: 600px;
+    text-align: center;
   }
   
