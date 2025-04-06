@@ -1,2 +1,2 @@
 # MOCKTEST
-The mocktest on gk.
+The mocktest is on gk.
