@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GK Mock Test</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>GK Mock Test</h1>
+    <div id="quiz-box">
+      <div id="question-box">
+        <p id="question"></p>
+        <ul id="options"></ul>
+      </div>
+      <div id="quiz-controls">
+        <button id="next-btn">Next</button>
+        <p id="timer">Time: <span id="time">30</span>s</p>
+      </div>
+    </div>
+    <div id="result-box" class="hidden">
+      <h2>Quiz Completed!</h2>
+      <p id="score"></p>
+      <button onclick="location.reload()">Try Again</button>
+    </div>
+  </div>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
